@@ -22,24 +22,13 @@ public class TranslationService {
         this.cacheManager = cacheManager;
     }
 
-    public Translation create(List<TranslationDto> dtos) {
-        for (TranslationDto dto : dtos) {
-            Translation t = new Translation();
-            t.setLocale(dto.locale());
-            t.setKey(dto.key());
-            t.setContent(dto.content());
-            t.setTags(dto.tags());
-            repository.save(t);
-        }
-
-        TranslationDto dto = dtos.get(dtos.size() -1);
+    public Translation create(TranslationDto dto) {
         Translation t = new Translation();
         t.setLocale(dto.locale());
         t.setKey(dto.key());
         t.setContent(dto.content());
         t.setTags(dto.tags());
-
-        return t;
+        return repository.save(t);
     }
 
     public Page<Translation> search(String tag, String key, String content, Pageable pageable) {
